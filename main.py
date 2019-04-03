@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import linije
 import math
+import brojevi
 
 xx1, yy1, xx2, yy2 = 0, 0, 0, 0
 
@@ -20,6 +21,10 @@ def ucitavanje_videa(video_path):
         if not ret_val:
             break
 
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        thresholdSlike, image_bin = cv2.threshold(gray, 100, 255, cv2.THRESH_OTSU)
+        print("PRAG JE: " + str(thresholdSlike))
+
         (x1,y1),(x2, y2)  = linije.pronadji_liniju(frame)
         razdaljina = math.sqrt(((x1 - x2) ** 2) + (y1 - y2) ** 2)
         print("RAZDALJINA", razdaljina)
@@ -33,7 +38,7 @@ def ucitavanje_videa(video_path):
 
         linija = (xx1,yy1),(xx2, yy2)
         cv2.line(frame, linija[0], linija[1], [0,255,0], thickness=2)
-
+        slika_sa_br = brojevi.izdvoj_brojeve(frame)
         plt.imshow(frame)
         plt.show()
 
