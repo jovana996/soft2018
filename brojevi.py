@@ -38,12 +38,13 @@ def detekcija_brojeva(image):
 
         x, y, w, h = cv2.boundingRect(contour)
 
-        if w > 3 and h > 5 and h < 300:  # uslov da kontura pripada (trebalo bi preko Krugova)
+        if w > 3 and h > 12 and h < 150:  # uslov da kontura pripada (trebalo bi preko Krugova)
             contours_numbers.append(contour)  # ova kontura pripada bar-kodu
-            print('Detektovano kontura(linija):  ' + str(len(contours_numbers)))
+
             print('Kordinate duzi su: ' + str(x) + ',' + str(y+h) + '  A druge tacke: ' + str(x+w) +',' + str(y)+ '  //Sirina je: ' + str(w) + ' __VISINA JE:  ' + str(h) )
 
             img = cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),1)
             plt.imshow(img)
             plt.show()
+    print('Detektovano kontura(linija):  ' + str(len(contours_numbers)))
         #im = cv2.drawContours(im, contours_numbers, 0, (0, 255, 0), 2)
