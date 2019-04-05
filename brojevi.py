@@ -31,20 +31,27 @@ def detekcija_brojeva(image):
     #cv2.drawContours(img, contours, -1, (0, 255, 0), 1)
 
     contours_numbers = []  # ovde ce biti samo konture koje pripadaju bar-kodu
-
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    print(kernel)
     for contour in contours:  # za svaku konturu
         center, size, angle = cv2.minAreaRect( contour)  # pronadji pravougaonik minimalne povrsine koji ce obuhvatiti celu konturu
         width, height = size
 
         x, y, w, h = cv2.boundingRect(contour)
 
-        if w > 3 and h > 12 and h < 150:  # uslov da kontura pripada (trebalo bi preko Krugova)
+        if w > 9 and h > 12 and h < 150:  # uslov da kontura pripada (trebalo bi preko Krugova)
             contours_numbers.append(contour)  # ova kontura pripada bar-kodu
 
             print('Kordinate duzi su: ' + str(x) + ',' + str(y+h) + '  A druge tacke: ' + str(x+w) +',' + str(y)+ '  //Sirina je: ' + str(w) + ' __VISINA JE:  ' + str(h) )
-
+            isecenBroj = img[y:y + h, x:x + w]
+            isecenBroj = cv2.resize(isecenBroj, (28,28), interpolation=cv2.INTER_AREA)
+            #radimo zatvaranje da popunimo 'crne rupe' u brojevima
+            isecenBroj = cv2.dilate(isecenBroj, kernel, iterations=1)
+            isecenBroj = cv2.erode(isecenBroj, kernel, iterations=1)
+            cv2.imwrite('slikeBrojeva/brojevi.png', isecenBroj)
             img = cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),1)
+
+
             plt.imshow(img)
             plt.show()
     print('Detektovano kontura(linija):  ' + str(len(contours_numbers)))
-        #im = cv2.drawContours(im, contours_numbers, 0, (0, 255, 0), 2)
