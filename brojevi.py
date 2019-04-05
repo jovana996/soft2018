@@ -25,7 +25,7 @@ def detekcija_brojeva(image):
 
     plt.imshow(image_bin)
     plt.show()
-    contours, hierarchy = cv2.findContours(img_gs, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    imgg, contours, hierarchy = cv2.findContours(img_gs, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     img = image.copy()
     #cv2.drawContours(img, contours, -1, (0, 255, 0), 1)
