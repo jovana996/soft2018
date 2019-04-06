@@ -27,7 +27,7 @@ def ucitavanje_videa(video_path):
 
         (x1,y1),(x2, y2)  = linije.pronadji_liniju(frame)
         razdaljina = math.sqrt(((x1 - x2) ** 2) + (y1 - y2) ** 2)
-        print("RAZDALJINA", razdaljina)
+
         if razdaljina > 150:
             xx1 = x1;
             yy1 = y1;
@@ -38,7 +38,13 @@ def ucitavanje_videa(video_path):
 
         linija = (xx1,yy1),(xx2, yy2)
         cv2.line(frame, linija[0], linija[1], [0,255,0], thickness=2)
-        slika_sa_br = brojevi.izdvoj_brojeve(frame)
+        contures_numbers = brojevi.izdvoj_brojeve(frame)
+        print("KONTURE SVIH BROJEVA : ", contures_numbers)
+        print("LINIJA : ", linija)
+        for kontura in contures_numbers:
+            if(linije.prosao_broj(linija, kontura)):
+                print('PROSAO BROJ!!!!!!!')
+                broj = brojevi.skaliranje_broja(frame,kontura)
         plt.imshow(frame)
         plt.show()
 
@@ -47,7 +53,7 @@ def ucitaj_sve() :
         ucitavanje_videa('videos/video-' + str(i) + '.avi')
 
 def main():
-    print('cao zdravo')
+
     ucitaj_sve()
 
 if  __name__ =="__main__" :
