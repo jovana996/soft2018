@@ -1,12 +1,12 @@
 RA 61/2015 Jovana Novakovic
 Video	suma	
-video-0	16
-video-1	43
+video-0	15
+video-1	35
 video-2	56
-video-3	89
-video-4	32
-video-5	53
-video-6	76
-video-7	83
-video-8	90
-video-9	85
+video-3	53
+video-4	40
+video-5	45
+video-6	70
+video-7	77
+video-8	78
+video-9	66

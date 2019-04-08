@@ -40,7 +40,7 @@ def detekcija_brojeva(image):
         x, y, w, h = cv2.boundingRect(contour)
 
 
-        if w > 9 and h > 12 and h < 150:  # uslov da kontura pripada
+        if w > 8 and h > 15 and h < 150:  # uslov da kontura pripada
             contours_numbers.append(contour)
 
             #print('Kordinate duzi su: ' + str(x) + ',' + str(y+h) + '  A druge tacke: ' + str(x+w) +',' + str(y)+ '  //Sirina je: ' + str(w) + ' __VISINA JE:  ' + str(h) )
@@ -58,7 +58,7 @@ def skaliranje_broja(img, kontura):
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
     img_gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY);
     ret,img_bin = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY)
-    #print('Kernel: ', kernel)
+
     isecenBroj = img_bin[y:y + h, x:x + w]
     isecenBroj = cv2.resize(isecenBroj, (28, 28), interpolation=cv2.INTER_NEAREST)
     # radimo zatvaranje da popunimo 'crne rupe' u brojevima
@@ -70,13 +70,13 @@ def skaliranje_broja(img, kontura):
     return isecenBroj
 
 def ispravi_broj(img):
-    velicina = 28
+
     moments = cv2.moments(img)
     if abs(moments['mu02']) < 1e-2:
         return img.copy()
     nakrivljenost = moments['mu11'] / moments['mu02']
-    M = np.float32([[1, nakrivljenost, -0.5 * velicina * nakrivljenost], [0, 1, 0]])
-    img = cv2.warpAffine(img, M, (velicina, velicina), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
+    M = np.float32([[1, nakrivljenost, -0.5 * 28 * nakrivljenost], [0, 1, 0]])
+    img = cv2.warpAffine(img, M, (28, 28), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
     return img
 def scale_to_range(image): # skalira elemente slike na opseg od 0 do 1
     ''' Elementi matrice image su vrednosti 0 ili 255.

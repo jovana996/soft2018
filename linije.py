@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from numpy.linalg import norm
+
 import math
 import matplotlib.pyplot as plt
 
@@ -21,25 +21,23 @@ def pronadji_liniju(img):
 
 def prosao_broj(linija, broj):
     x, y, w, h = broj
-    centar = (int(x + (w / 2.0)), int(y + (h / 2.0)))
+
     brx = x+w
     bry = y+h
 
+
     t1, t2 = linija
 
-    if t1[0] < brx < t2[0] and  t2[1] < bry < t1[1]:
-        p1 = np.array(t1)
-        p2 = np.array(t2)
+    if t1[0] < brx < t2[0] and t2[1] < y < t1[1]:
 
-
-        x_diff = t2[0]- t1[0]
+        x_diff = t2[0] - t1[0]
         y_diff = t2[1] - t1[1]
 
         num = abs(y_diff * brx - x_diff * bry + t2[0] * t1[1] - t2[1] * t1[0])
         den = math.sqrt(y_diff ** 2 + x_diff ** 2)
         distance = num/den
 
-        if 5 > distance:
+        if 4.9 > distance:
             return True
 
     return False
