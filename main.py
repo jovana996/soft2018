@@ -52,7 +52,7 @@ def ucitavanje_videa(video_path, ann):
         #print("LINIJA : ", linija)
         for kontura in contures_numbers:
             if(linije.prosao_broj(linija, kontura)):
-                print('PROSAO BROJ!!!!!!!')
+                #print('PROSAO BROJ!!!!!!!')
                 broj = brojevi.skaliranje_broja(frame,kontura)
                 #plt.imshow(broj)
                 #plt.show()
@@ -71,19 +71,7 @@ def ucitaj_sve(ann) :
      for i in [3, 4, 5, 6, 7, 8, 9]:
         ucitavanje_videa('videos/video-' + str(i) + '.avi', ann)
 
-def convert_output(alphabet):
-    '''Konvertovati alfabet u niz pogodan za obučavanje NM,
-        odnosno niz čiji su svi elementi 0 osim elementa čiji je
-        indeks jednak indeksu elementa iz alfabeta za koji formiramo niz.
-        Primer prvi element iz alfabeta [1,0,0,0,0,0,0,0,0,0],
-        za drugi [0,1,0,0,0,0,0,0,0,0] itd..
-    '''
-    nn_outputs = []
-    for index in range(len(alphabet)):
-        output = np.zeros(len(alphabet))
-        output[index] = 1
-        nn_outputs.append(output)
-    return np.array(nn_outputs)
+
 def main():
 
     klasifikator = nm.create_model()
